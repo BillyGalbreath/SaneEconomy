@@ -5,6 +5,7 @@ import org.appledash.saneeconomy.economy.backend.EconomyStorageBackend;
 import org.appledash.saneeconomy.economy.economable.Economable;
 import org.appledash.saneeconomy.economy.transaction.Transaction;
 import org.appledash.saneeconomy.economy.transaction.TransactionResult;
+import org.appledash.saneeconomy.event.SetBalanceEvent;
 import org.appledash.saneeconomy.utils.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -150,6 +151,8 @@ public class EconomyManager {
         if (targetPlayer == Economable.CONSOLE) {
             return;
         }
+
+        Bukkit.getPluginManager().callEvent(new SetBalanceEvent(targetPlayer, amount));
 
         backend.setBalance(targetPlayer, amount);
     }
